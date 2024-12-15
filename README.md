@@ -1,7 +1,23 @@
-# congiguration
+### congiguration
+
 npm i eslint vite-plugin-eslint eslint-config-react-app --save-dev
 
+## Installation tailwind prettier extension
 
+To get started, install `prettier-plugin-tailwindcss` as a dev-dependency:
+
+```sh
+npm install -D prettier prettier-plugin-tailwindcss
+```
+
+Then add the plugin to your [Prettier configuration](https://prettier.io/docs/en/configuration.html):
+
+```json5
+// .prettierrc
+{
+  plugins: ["prettier-plugin-tailwindcss"],
+}
+```
 
 # React + Vite
 
