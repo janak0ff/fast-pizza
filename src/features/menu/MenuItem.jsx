@@ -1,6 +1,15 @@
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 
+/**
+ * A single menu item, with a picture, name, ingredients, price, and "Add to cart" button.
+ * If the item is sold out, the image is greyed out and the price is replaced with a
+ * "Sold out" message.
+ *
+ * @param {Object} pizza - an object with `id`, `name`, `unitPrice`, `ingredients`,
+ *   `soldOut`, and `imageUrl` properties.
+ * @returns {JSX.Element} A JSX element representing a single menu item.
+ */
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 

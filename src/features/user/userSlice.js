@@ -1,21 +1,25 @@
 function getPosition() {
+  // Return a new promise that resolves with the user's current geographical position
   return new Promise(function (resolve, reject) {
+    // Use the browser's geolocation API to get the current position
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
 
 async function fetchAddress() {
-  // 1) We get the user's geolocation position
+  // Call getPosition to get the current geographical position of the user
   const positionObj = await getPosition();
+  // Extract latitude and longitude from the position object
   const position = {
     latitude: positionObj.coords.latitude,
     longitude: positionObj.coords.longitude,
   };
 
-  // 2) Then we use a reverse geocoding API to get a description of the user's address, so we can display it the order form, so that the user can correct it if wrong
+  // Use a reverse geocoding API to convert the position into a human-readable address
   const addressObj = await getAddress(position);
+  // Format the address components into a single string
   const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
 
-  // 3) Then we return an object with the data that we are interested in
+  // Return an object containing both the geographical position and the formatted address
   return { position, address };
 }

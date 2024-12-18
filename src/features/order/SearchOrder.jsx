@@ -2,13 +2,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function SearchOrder() {
+  // Declare a state variable 'query' to store the search input, initialized to an empty string
   const [query, setQuery] = useState("");
+
+  // Get the navigation function from 'react-router-dom' to programmatically navigate between routes
   const navigate = useNavigate();
 
+  // Define the form submission handler function
   function handleSubmit(e) {
+    // Prevent the default form submission behavior to handle it with JavaScript
     e.preventDefault();
+
+    // If the query is empty, do nothing and return
     if (!query) return;
+
+    // Navigate to the order details page using the order number from the query
     navigate(`/order/${query}`);
+
+    // Clear the query input after navigation
     setQuery("");
   }
 

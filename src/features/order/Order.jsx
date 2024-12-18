@@ -24,6 +24,7 @@ function Order() {
     cart,
   } = order;
 
+  // Calculate the minutes left until delivery by using the estimated delivery time
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
