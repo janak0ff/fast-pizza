@@ -1,6 +1,7 @@
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
+import { useSelector } from "react-redux";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -55,6 +56,9 @@ const fakeCart = [
  * JSON string. This data is used by the action function to create the new order.
  */
 function CreateOrder() {
+  // Get the username from Redux store using useSelector
+  const username = useSelector((state) => state.user.username);
+
   // useNavigation returns an object with the state of the navigation.
   // The state can be one of the following: "idle", "submitting", "loading".
   // We use the state to determine if the form is currently submitting.
@@ -79,7 +83,13 @@ function CreateOrder() {
       <Form method="POST">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">First Name</label>
-          <input className="input grow" type="text" name="customer" required />
+          <input
+            className="input grow"
+            type="text"
+            defaultValue={username}
+            name="customer"
+            required
+          />
         </div>
 
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">

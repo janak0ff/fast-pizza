@@ -21,7 +21,9 @@ function Button({ children, disabled, to, type }) {
   if (to)
     // Return a Link component with the given CSS style
     return (
+      // The Link component has a to prop that specifies the destination of the link
       <Link to={to} className={styles[type]}>
+        {/* // Render the children of the button */}
         {children}
       </Link>
     );
