@@ -2,13 +2,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 // Import the userReducer from the userSlice.js file
 import userReducer from "./features/user/userSlice";
+import cartReducer from "./features/cart/cartSlice";
 
 // Create a store using the configureStore function
 const store = configureStore({
-  // Define the reducer function for the user feature
+  // Define the reducers that will be used in the store
   reducer: {
-    // The user feature reducer
     user: userReducer,
+    cart: cartReducer,
   },
 });
 
