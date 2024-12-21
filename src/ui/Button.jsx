@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 // Declare a function component named Button
-function Button({ children, disabled, to, type }) {
+function Button({ children, disabled, to, type, onClick }) {
   // Declare a variable base that contains the common CSS styles of the button
   const base =
     "inline-block text-sm rounded-full bg-yellow-400 font-semibold uppercase tracking-wide text-stone-800 transition-colors duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed";
@@ -28,6 +28,16 @@ function Button({ children, disabled, to, type }) {
       </Link>
     );
 
+  if (onClick) {
+    // and the onClick prop as its click event handler
+    return (
+      <button onClick={onClick} disabled={disabled} className={styles[type]}>
+        {children}
+      </button>
+    );
+  }
+
+  // (this is the case for buttons that are links)
   return (
     <button disabled={disabled} className={styles[type]}>
       {children}

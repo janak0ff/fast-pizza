@@ -1,6 +1,7 @@
+import { useDispatch } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
-
+import { addItem } from "../cart/cartSlice";
 /**
  * A single menu item, with a picture, name, ingredients, price, and "Add to cart" button.
  * If the item is sold out, the image is greyed out and the price is replaced with a
@@ -11,7 +12,21 @@ import { formatCurrency } from "../../utils/helpers";
  * @returns {JSX.Element} A JSX element representing a single menu item.
  */
 function MenuItem({ pizza }) {
+  const dispach = useDispatch();
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+
+  function handleAddToCart() {
+    // console.log(`Added pizza ${name} to cart`);
+    const newItem = {
+      pizzaId: id,
+      name,
+      quantity: 1,
+      unitPrice,
+      totalPrice: unitPrice * 1,
+    };
+
+    dispach(addItem(newItem));
+  }
 
   return (
     <li className="flex gap-4 py-2">
@@ -34,7 +49,11 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          <Button type="small">Add to cart</Button>
+          {!soldOut && (
+            <Button onClick={handleAddToCart} type="small">
+              Add to cart
+            </Button>
+          )}
         </div>
       </div>
     </li>
