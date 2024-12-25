@@ -75,18 +75,30 @@ export const {
 export default cartSlice.reducer;
 
 // use 'reselect' for big application
+// Selector function that returns the entire cart array from the Redux state
 export const getCart = (state) => state.cart.cart;
 
+// Selector function that calculates the total quantity of all items in the cart
+// Uses reduce to sum up the quantity property of each cart item, starting from 0
 export const getTotalCartQuantity = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
 
+// Selector function that calculates the total price of all items in the cart
+// Uses reduce to sum up the totalPrice property of each cart item, starting from 0
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
-// This selector function takes a pizza ID and returns another function that accepts the Redux state
-// It finds the item in the cart with the matching pizzaId and returns its quantity
-// Uses optional chaining (?.) to safely access quantity property if item exists
-// Uses nullish coalescing operator (??) to return 0 if no matching item is found
-// This allows us to check the current quantity of any pizza in the cart by ID
+/* The getCurrentQuantityById function takes a pizza ID (id) as an argument and returns another function. This outer function is a selector function that accepts the Redux state as an argument.
+Inside the selector function, it uses the find method to find the item in the cart with a matching pizzaId. The find method returns the first item that satisfies the provided testing function.
+The ?. operator is used to safely access the quantity property of the found item. If the item is null or undefined, the ?. operator will return undefined.
+The ?? operator is used as a fallback value. If the quantity property is undefined (due to the ?. operator), the ?? operator will return 0.
+Finally, the selector function returns the current quantity of the pizza item with the specified ID, or 0 if no matching item is found.*/
+
 export const getCurrentQuantityById = (id) => (state) =>
   state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
+
+/* The find method is a built-in JavaScript method that is used to find the first element in an array that satisfies a provided testing function. It iterates over each element in the array and executes the testing function on each element until it finds one that returns a truthy value. Once it finds a matching element, it immediately returns that element. If no matching element is found, it returns undefined.
+
+const numbers = [1, 2, 3, 4, 5];
+const foundNumber = numbers.find((number) => number > 3);
+console.log(foundNumber); // Output: 4 */
