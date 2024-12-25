@@ -1,7 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
-import { addItem } from "../cart/cartSlice";
+import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
+import DeleteItem from "../cart/DeleteItem";
+
 /**
  * A single menu item, with a picture, name, ingredients, price, and "Add to cart" button.
  * If the item is sold out, the image is greyed out and the price is replaced with a
@@ -12,8 +14,12 @@ import { addItem } from "../cart/cartSlice";
  * @returns {JSX.Element} A JSX element representing a single menu item.
  */
 function MenuItem({ pizza }) {
-  const dispach = useDispatch();
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch();
+
+  const currentQuantity = useSelector(getCurrentQuantityById(id));
+  const isInCart = currentQuantity > 0;
+
 
   function handleAddToCart() {
     // console.log(`Added pizza ${name} to cart`);
@@ -25,7 +31,7 @@ function MenuItem({ pizza }) {
       totalPrice: unitPrice * 1,
     };
 
-    dispach(addItem(newItem));
+    dispatch(addItem(newItem));
   }
 
   return (
@@ -49,7 +55,9 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          {!soldOut && (
+          {isInCart && <DeleteItem pizzaId={id} />}
+
+          {!soldOut && !isInCart && (
             <Button onClick={handleAddToCart} type="small">
               Add to cart
             </Button>

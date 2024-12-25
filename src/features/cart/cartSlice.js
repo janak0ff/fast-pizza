@@ -82,3 +82,11 @@ export const getTotalCartQuantity = (state) =>
 
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
+
+// This selector function takes a pizza ID and returns another function that accepts the Redux state
+// It finds the item in the cart with the matching pizzaId and returns its quantity
+// Uses optional chaining (?.) to safely access quantity property if item exists
+// Uses nullish coalescing operator (??) to return 0 if no matching item is found
+// This allows us to check the current quantity of any pizza in the cart by ID
+export const getCurrentQuantityById = (id) => (state) =>
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
