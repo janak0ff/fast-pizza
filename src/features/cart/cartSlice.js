@@ -48,11 +48,8 @@ const cartSlice = createSlice({
       // Update the total price for the new quantity
       item.totalPrice = item.quantity * item.unitPrice;
       // If the quantity reaches zero, remove the item from the cart
-      if (item.quantity === 0) {
-        state.cart = state.cart.filter(
-          (item) => item.pizzaId !== action.payload,
-        );
-      }
+      if (item.quantity === 0)  cartSlice.caseReducers.deleteItem(state, action);
+        //OR {state.cart = state.cart.filter((item) => item.pizzaId !== action.payload,);}
     },
     // Reducer to clear all items from the cart
     clearCart: (state) => {
