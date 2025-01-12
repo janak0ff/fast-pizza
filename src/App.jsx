@@ -11,6 +11,7 @@ import CreateOrder, {
 } from "./features/order/CreateOrder";
 import Order, { loader as orderLoader } from "./features/order/Order";
 import AppLayout from "./ui/AppLayout";
+import { action as updateOrderAction } from "./features/order/UpdateOrder";
 
 // Create a router using createBrowserRouter function
 const router = createBrowserRouter([
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
         element: <Order />,
         loader: orderLoader, // Loader function for fetching order data
         errorElement: <Error />, // Error handling for the order route
+        action: updateOrderAction, // Action function for updating an order
       },
     ],
   },
