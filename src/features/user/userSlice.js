@@ -60,11 +60,11 @@ const userSlice = createSlice({
         // Set the status to "succeeded" and update the position and address in the state
         state.position = action.payload.position;
         state.address = action.payload.address;
-        state.state = 'idle'; // Reset the status to "idle" after fetching the address
+        state.status = "idle"; // Reset the status to "idle" after fetching the address
       })
       .addCase(fetchAddress.rejected, (state, action) => {
-        // Set the status to "failed" and save the error message in the state
-        state.status = "failed";
+        // Set the status to "error" and save the error message in the state
+        state.status = "error";
         state.error = action.error.message;
       }),
 });
