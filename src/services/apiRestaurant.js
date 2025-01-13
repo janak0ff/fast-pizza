@@ -1,14 +1,13 @@
 // URL to the API
 const API_URL = "https://react-fast-pizza-api.jonas.io/api";
 
-// async function to get the menu from the API
+// Async function to get the menu from the API
 export async function getMenu() {
-  // fetch the menu from the API
+  // Fetch the menu from the API
   const res = await fetch(`${API_URL}/menu`);
 
   // Check if the response is OK
   // If it's not OK, throw an error
-  // fetch won't throw error on 400 errors (e.g. when URL is wrong), so we need to do it manually. This will then go into the catch block, where the message is set
   if (!res.ok) throw Error("Failed getting menu");
 
   // Get the JSON data from the response
@@ -17,9 +16,9 @@ export async function getMenu() {
   return data;
 }
 
-// async function to get an order from the API
+// Async function to get an order from the API
 export async function getOrder(id) {
-  // fetch the order from the API
+  // Fetch the order from the API using the provided order ID
   const res = await fetch(`${API_URL}/order/${id}`);
 
   // Check if the response is OK
@@ -32,49 +31,41 @@ export async function getOrder(id) {
   return data;
 }
 
-// async function to create an order on the API
-export async function createOrder(newOrder) {
-  try {
-    // Post the new order to the API
-    const res = await fetch(`${API_URL}/order`, {
-      method: "POST",
-      body: JSON.stringify(newOrder),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+// Async function to create a new order
+export async function createOrder(order) {
+  // Send a POST request to the API to create a new order
+  const res = await fetch(`${API_URL}/order`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(order),
+  });
 
-    // Check if the response is OK
-    // If it's not OK, throw an error
-    if (!res.ok) throw Error();
-    // Get the JSON data from the response
-    const { data } = await res.json();
-    // Return the data
-    return data;
-  } catch {
-    // If there is an error, throw an error
-    throw Error("Failed creating your order");
-  }
+  // Check if the response is OK
+  // If it's not OK, throw an error
+  if (!res.ok) throw Error("Failed creating order");
+
+  // Get the JSON data from the response
+  const { data } = await res.json();
+  // Return the data
+  return data;
 }
 
-// async function to update an order on the API
-export async function updateOrder(id, updateObj) {
-  try {
-    // Patch the order on the API
-    const res = await fetch(`${API_URL}/order/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(updateObj),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+// Async function to update an existing order
+export async function updateOrder(id, updates) {
+  // Send a PATCH request to the API to update the order with the provided ID
+  const res = await fetch(`${API_URL}/order/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updates),
+  });
 
-    // Check if the response is OK
-    // If it's not OK, throw an error
-    if (!res.ok) throw Error();
-    // We don't need the data, so we don't return anything
-  } catch (err) {
-    // If there is an error, throw an error
-    throw Error("Failed updating your order");
-  }
+  // Check if the response is OK
+  // If it's not OK, throw an error
+  if (!res.ok) throw Error("Failed updating your order");
+
+  // We don't need the data, so we don't return anything
 }
