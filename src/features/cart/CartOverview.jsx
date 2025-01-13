@@ -1,12 +1,19 @@
+// Import useSelector hook from react-redux to access the Redux store state
 import { useSelector } from "react-redux";
+// Import Link component from react-router-dom for navigation
 import { Link } from "react-router-dom";
+// Import selectors to get total cart price and quantity from the cartSlice
 import { getTotalCartPrice, getTotalCartQuantity } from "./cartSlice";
+// Import formatCurrency function to format prices
 import { formatCurrency } from "../../utils/helpers";
 
 function CartOverview() {
+  // Get the total quantity of items in the cart from the Redux store
   const totalCartQuantity = useSelector(getTotalCartQuantity);
+  // Get the total price of items in the cart from the Redux store
   const totalCartPrice = useSelector(getTotalCartPrice);
 
+  // If the cart is empty, return null (do not render anything)
   if (!totalCartQuantity) return null;
 
   return (
