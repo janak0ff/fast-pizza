@@ -58,13 +58,16 @@ function Order() {
             ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
             : "Order should have arrived"}
         </p>
+        {/* Display the estimated delivery time */}
         <p className="text-xs text-stone-500">
           (Estimated delivery: {formatDate(estimatedDelivery)})
         </p>
       </div>
 
-      <ul className="dive-stone-200 divide-y border-b border-t">
+      {/* List of items in the order */}
+      <ul className="divide-y divide-stone-200 border-b border-t">
         {cart.map((item) => (
+          // Render an OrderItem component for each item in the cart
           <OrderItem
             item={item}
             key={item.pizzaId}
@@ -77,6 +80,7 @@ function Order() {
         ))}
       </ul>
 
+      {/* Display the price details of the order */}
       <div className="space-y-2 bg-stone-200 px-6 py-5">
         <p className="text-sm font-medium text-stone-600">
           Price pizza: {formatCurrency(orderPrice)}

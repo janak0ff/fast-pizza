@@ -15,30 +15,6 @@ const isValidPhone = (str) =>
     str,
   );
 
-// const fakeCart = [
-//   {
-//     pizzaId: 12,
-//     name: "Mediterranean",
-//     quantity: 2,
-//     unitPrice: 16,
-//     totalPrice: 32,
-//   },
-//   {
-//     pizzaId: 6,
-//     name: "Vegetale",
-//     quantity: 1,
-//     unitPrice: 13,
-//     totalPrice: 13,
-//   },
-//   {
-//     pizzaId: 11,
-//     name: "Spinach and Mushroom",
-//     quantity: 1,
-//     unitPrice: 15,
-//     totalPrice: 15,
-//   },
-// ];
-
 /**
  * Form to create a new order.
  *
@@ -72,33 +48,35 @@ function CreateOrder() {
   } = useSelector((state) => state.user);
   const isLoadingAddress = addressStatus === "loading";
 
-  // useNavigation returns an object with the state of the navigation.
-  // The state can be one of the following: "idle", "submitting", "loading".
-  // We use the state to determine if the form is currently submitting.
-  // If it is, we disable the submit button and display a message
-  // indicating that the order is being placed.
+  // Get the navigation state to determine if the form is currently submitting
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
-  // useActionData returns the form error data returned by the action function
-  // when the form is submitted. If there is an error, it displays the error
-  // message next to the relevant field.
+  // Get the form error data returned by the action function when the form is submitted
   const formErrors = useActionData();
 
   const dispatch = useDispatch();
 
+  // State to manage whether the order should be given priority
   const [withPriority, setWithPriority] = useState(false);
+
+  // Get the cart items and total cart price from the Redux store
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
+
+  // Calculate the priority price if the order is given priority
   const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+  // Calculate the total price including the priority price
   const totalPrice = totalCartPrice + priorityPrice;
+
+  // If the cart is empty, display the EmptyCart component
   if (!cart.length) return <EmptyCart />;
 
   return (
     <div className="px-4 py-6">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
 
-      {/* <Form method="POST" action="/order/new"> */}
+      {/* Form to create a new order */}
       <Form method="POST">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">First Name</label>

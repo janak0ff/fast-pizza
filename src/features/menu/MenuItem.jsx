@@ -6,23 +6,23 @@ import DeleteItem from "../cart/DeleteItem";
 import UpdateItemQuantity from "../cart/UpdateItemQuantity";
 
 /**
- * A single menu item, with a picture, name, ingredients, price, and "Add to cart" button.
- * If the item is sold out, the image is greyed out and the price is replaced with a
- * "Sold out" message.
- *
- * @param {Object} pizza - an object with `id`, `name`, `unitPrice`, `ingredients`,
- *   `soldOut`, and `imageUrl` properties.
+ * MenuItem component to display a single pizza item in the menu.
+ * @param {Object} pizza - The pizza object containing details about the pizza.
  * @returns {JSX.Element} A JSX element representing a single menu item.
  */
 function MenuItem({ pizza }) {
+  // Destructure properties from the pizza object
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const dispatch = useDispatch();
 
+  // Get the current quantity of the pizza in the cart from the Redux store
   const currentQuantity = useSelector(getCurrentQuantityById(id));
+  // Check if the pizza is already in the cart
   const isInCart = currentQuantity > 0;
 
+  // Function to handle adding the pizza to the cart
   function handleAddToCart() {
-    // console.log(`Added pizza ${name} to cart`);
+    // Create a new item object to add to the cart
     const newItem = {
       pizzaId: id,
       name,
@@ -31,6 +31,7 @@ function MenuItem({ pizza }) {
       totalPrice: unitPrice * 1,
     };
 
+    // Dispatch the addItem action to add the new item to the cart
     dispatch(addItem(newItem));
   }
 
